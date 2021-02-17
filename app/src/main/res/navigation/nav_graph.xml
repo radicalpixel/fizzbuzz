@@ -18,7 +18,17 @@
         tools:layout="@layout/fragment_fizzbuzz_form">
         <action
             android:id="@+id/navigate_to_list"
-            app:destination="@id/fragment_placeholder" />
+            app:destination="@id/fragment_fizz_buzz_list" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragment_fizz_buzz_list"
+        android:name="com.waxym.ui.fragment.FizzBuzzListFragment"
+        android:label="@string/fragment_title_list"
+        tools:layout="@layout/fragment_fizzbuzz_list">
+        <argument
+            android:name="fizzBuzzFormId"
+            app:argType="long" />
     </fragment>
 
 </navigation>

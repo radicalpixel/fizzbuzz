@@ -10,10 +10,11 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.material.transition.MaterialSharedAxis
 import com.waxym.databinding.FragmentFizzbuzzFormBinding
 import com.waxym.ui.viewmodel.FormViewModel
-import com.waxym.utils.asInt
-import com.waxym.utils.asString
-import com.waxym.utils.requireNotBlank
-import com.waxym.utils.requirePositiveInteger
+import com.waxym.utils.extension.materialSharedAxis
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 
 class FizzBuzzFormFragment : Fragment() {
     private lateinit var binding: FragmentFizzbuzzFormBinding
@@ -24,37 +25,24 @@ class FizzBuzzFormFragment : Fragment() {
             it.viewModel = viewModel
             it.lifecycleOwner = viewLifecycleOwner
         }
-        enterTransition = MaterialSharedAxis(MaterialSharedAxis.Z, true).apply {
-            duration = resources.getInteger(android.R.integer.config_longAnimTime).toLong()
-        }
-        exitTransition = MaterialSharedAxis(MaterialSharedAxis.Z, false).apply {
-            duration = resources.getInteger(android.R.integer.config_longAnimTime).toLong()
-        }
+        enterTransition = materialSharedAxis(MaterialSharedAxis.Z, true)
+        exitTransition = materialSharedAxis(MaterialSharedAxis.Z, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.actionCompute.setOnClickListener {
-            validateForm {
-                navigateToFizzBuzzList()
+            CoroutineScope(Job() + Dispatchers.Main).launch {
+                viewModel.doOnValidForm(binding) {
+                    navigateToFizzBuzzList(it.uid)
+                }
             }
         }
     }
 
-    private fun validateForm(lambda: () -> Unit) {
-        val fizzMultiple: Int? = binding.inputLayoutFizzMultiple.requireNotBlank()?.requirePositiveInteger()?.asInt()
-        val fizzLabel: String? = binding.inputLayoutFizzLabel.requireNotBlank()?.asString()
-        val buzzMultiple: Int? = binding.inputLayoutBuzzMultiple.requireNotBlank()?.requirePositiveInteger()?.asInt()
-        val buzzLabel: String? = binding.inputLayoutBuzzLabel.requireNotBlank()?.asString()
-        val limit: Int? = binding.inputLayoutLimit.requireNotBlank()?.requirePositiveInteger()?.asInt()
-        if (fizzMultiple != null && fizzLabel != null && buzzMultiple != null && buzzLabel != null && limit != null) {
-            lambda()
-        }
-    }
-
-    private fun navigateToFizzBuzzList() {
-        val direction = FizzBuzzFormFragmentDirections.navigateToList()
+    private fun navigateToFizzBuzzList(fizzBuzzFormId: Long) {
+        val direction = FizzBuzzFormFragmentDirections.navigateToList(fizzBuzzFormId)
         findNavController().navigate(direction)
     }
 }

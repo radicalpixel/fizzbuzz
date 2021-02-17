@@ -1,4 +1,4 @@
-package com.waxym.utils
+package com.waxym.utils.extension
 
 import androidx.annotation.StringRes
 import com.google.android.material.textfield.TextInputLayout
