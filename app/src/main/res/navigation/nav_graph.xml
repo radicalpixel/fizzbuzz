@@ -3,12 +3,22 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/fragment_placeholder">
+    app:startDestination="@id/fragment_fizz_buzz_form">
 
     <fragment
         android:id="@+id/fragment_placeholder"
         android:name="com.waxym.ui.fragment.PlaceHolderFragment"
         android:label="@string/label_placeholder"
         tools:layout="@layout/fragment_placeholder" />
+
+    <fragment
+        android:id="@+id/fragment_fizz_buzz_form"
+        android:name="com.waxym.ui.fragment.FizzBuzzFormFragment"
+        android:label="@string/fragment_title_form"
+        tools:layout="@layout/fragment_fizzbuzz_form">
+        <action
+            android:id="@+id/navigate_to_list"
+            app:destination="@id/fragment_placeholder" />
+    </fragment>
 
 </navigation>

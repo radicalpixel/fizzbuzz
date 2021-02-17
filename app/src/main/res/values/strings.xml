@@ -1,7 +1,22 @@
 <resources>
-    <string name="app_name">FizzBuzz</string>
+    <string name="app_name">Fizz-Buzz</string>
 
     <string name="fragment_title_placeholder">@string/app_name</string>
+    <string name="fragment_title_form">Fizz-Buzz Form</string>
+
+    <string name="action_fizz_buzz">FIZZZZ-BUUZZZ !</string>
 
     <string name="label_placeholder">This is a placeholder.</string>
+    <string name="label_form_context">Fizz-Buzz consists in:\n\n- writing all numbers from 1 to #Limit.\n- Replacing all multiples of #fizzMultible by #fizzLabel\n- Replacing all multiples of #buzzMultiple by #buzzLabel.\n- And replacing all multiples of #fizzMultiple times #buzzMultiple by "#fizzLabel" + "#buzzLabel".\n\nThe output with 3, fizz, 5, buzz, 100 would look like this:\n"1, 2, fizz, 4, buzz, fizz, 7, 8, fizz, buzz, 11, fizz, 13, 14, fizzbuzz, 16 , …, 99, buzz".</string>
+    <string name="label_form_fizz_multiple_hint">Fizz Multiple</string>
+    <string name="label_form_fizz_label_hint">Fizz Label</string>
+    <string name="label_form_buzz_multiple_hint">Buzz Multiple</string>
+    <string name="label_form_buzz_label_hint">Buzz Label</string>
+    <string name="label_form_limit_hint">Limit</string>
+
+    <string name="form_helper_mandatory_field">Mandatory field</string>
+    <string name="form_error_mandatory_field">This field is mandatory.</string>
+    <string name="form_error_type_number">This field should be a number.</string>
+    <string name="form_error_type_positive_integer">This field should be a positive integer.</string>
+
 </resources>
