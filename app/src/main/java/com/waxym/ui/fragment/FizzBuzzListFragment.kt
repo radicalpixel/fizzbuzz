@@ -1,13 +1,14 @@
 package com.waxym.ui.fragment
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.navigation.ui.NavigationUI
 import com.google.android.material.transition.MaterialSharedAxis
+import com.waxym.R
 import com.waxym.databinding.FragmentFizzbuzzListBinding
 import com.waxym.ui.adapter.FizzBuzzItemAdapter
 import com.waxym.ui.viewmodel.FizzBuzzListViewModel
@@ -18,7 +19,8 @@ class FizzBuzzListFragment : Fragment() {
     private val navArg: FizzBuzzListFragmentArgs by navArgs()
     private val viewModel: FizzBuzzListViewModel by viewModels { FizzBuzzListViewModel.Factory(navArg.fizzMultiple, navArg.fizzLabel, navArg.buzzMultiple, navArg.buzzLabel, navArg.limit) }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        setHasOptionsMenu(true)
         binding = FragmentFizzbuzzListBinding.inflate(inflater, container, false)
         enterTransition = materialSharedAxis(MaterialSharedAxis.Z, true)
         exitTransition = materialSharedAxis(MaterialSharedAxis.Z, false)
@@ -34,5 +36,14 @@ class FizzBuzzListFragment : Fragment() {
                 adapter.notifyDataSetChanged()
             }
         }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.menu_stats, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return NavigationUI.onNavDestinationSelected(item, findNavController()) || super.onOptionsItemSelected(item)
     }
 }

@@ -20,8 +20,8 @@ data class FizzBuzzForm(
     val buzzLabel: String,
     @ColumnInfo(name = COL_LIMIT)
     val limit: Int,
-    @ColumnInfo(name = COL_COUNT)
-    var count: Int,
+    @ColumnInfo(name = COL_HIT_COUNT)
+    var hit: Int,
 ) {
     companion object {
         const val TABLE_NAME = "FizzBuzzForm"
@@ -30,6 +30,6 @@ data class FizzBuzzForm(
         const val COL_BUZZ_MULTIPLE = "col_buzzMultiple"
         const val COL_BUZZ_LABEL = "col_buzzLabel"
         const val COL_LIMIT = "col_limit"
-        const val COL_COUNT = "col_count"
+        const val COL_HIT_COUNT = "col_hit_count"
     }
 }

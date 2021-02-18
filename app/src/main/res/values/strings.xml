@@ -22,6 +22,8 @@
     <string name="label_form_buzz_label_hint">Buzz Label</string>
     <string name="label_form_limit_hint">Limit</string>
 
-    <string name="label_stats_char_list_start">1…%1$d</string>
+    <string name="label_stats_graph_total">Total: %1$d</string>
+    <string name="label_stats_chart_list_Hit">Hit: %1$d</string>
+    <string name="label_stats_chart_list_start">1…%1$d</string>
 
 </resources>

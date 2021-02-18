@@ -117,9 +117,10 @@ public class CircularStatView extends View {
             }
             startAngle += sweepAngle;
         }
-
-        drawPercentSeparator(canvas, Math.min(Math.max(minAngle, startAngle), maxAngle), mOutlineStrokeColor);
-        canvas.drawArc(margin, margin, mWidth - margin, mHeight - margin, minAngle, Math.max(Math.min(startAngle - minAngle, (mMaxDisplayedPercent - mMinDisplayedPercent) * 360f), 0f), false, mOutLinePaint);
+        if (mPercents.size() > 0) {
+            drawPercentSeparator(canvas, Math.min(Math.max(minAngle, startAngle), maxAngle), mOutlineStrokeColor);
+            canvas.drawArc(margin, margin, mWidth - margin, mHeight - margin, minAngle, Math.max(Math.min(startAngle - minAngle, (mMaxDisplayedPercent - mMinDisplayedPercent) * 360f), 0f), false, mOutLinePaint);
+        }
 
         canvas.restore();
     }

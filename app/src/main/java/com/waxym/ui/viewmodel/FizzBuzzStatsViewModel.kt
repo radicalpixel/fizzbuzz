@@ -31,7 +31,7 @@ class FizzBuzzStatsViewModel(application: Application) : AndroidViewModel(applic
     init {
         viewModelScope.launch {
             val data: List<FizzBuzzForm> = formDao.getMostFrequent(MAX)
-            val total: Float = formDao.sumCount().toFloat()
+            val total: Float = formDao.sumHitCount()?.toFloat() ?: 0f
 
             val percent = mutableListOf<CircularStatView.Percent>()
             val charts = mutableListOf<UIO.Char>()
@@ -40,13 +40,23 @@ class FizzBuzzStatsViewModel(application: Application) : AndroidViewModel(applic
                 percent.add(it.toPercent(color, total))
                 charts.add(it.toChartUio(color))
             }
+            val graph = if (total > 0f) {
+                listOf(percent.toGraphUio(total))
+            } else {
+                listOf()
+            }
 
-            _stats.postValue(listOf(UIO.Graph(percent)) + charts)
+            _stats.postValue(graph + charts)
         }
     }
 
     private fun FizzBuzzForm.toPercent(@ColorInt color: Int, total: Float): CircularStatView.Percent =
-        CircularStatView.Percent(count.toFloat() / total, color)
+        CircularStatView.Percent(hit.toFloat() / total, color)
+
+    private fun List<CircularStatView.Percent>.toGraphUio(total: Float): UIO.Graph = UIO.Graph(
+        data = this,
+        total = context.getString(R.string.label_stats_graph_total, total.toInt()),
+    )
 
     private fun FizzBuzzForm.toChartUio(@ColorInt color: Int): UIO.Char = UIO.Char(
         color = color,
@@ -54,13 +64,15 @@ class FizzBuzzStatsViewModel(application: Application) : AndroidViewModel(applic
         fizzLabel = fizzLabel,
         buzzMultiple = "$buzzMultiple",
         buzzLabel = buzzLabel,
-        limit = context.getString(R.string.label_stats_char_list_start, limit),
+        limit = context.getString(R.string.label_stats_chart_list_start, limit),
+        hit = context.getString(R.string.label_stats_chart_list_Hit, hit),
     )
 
     sealed class UIO {
 
         data class Graph(
-            val data: List<CircularStatView.Percent>
+            val data: List<CircularStatView.Percent>,
+            val total: String,
         ) : UIO()
 
         data class Char(
@@ -71,6 +83,7 @@ class FizzBuzzStatsViewModel(application: Application) : AndroidViewModel(applic
             val buzzMultiple: String,
             val buzzLabel: String,
             val limit: String,
+            val hit: String,
         ) : UIO()
     }
 

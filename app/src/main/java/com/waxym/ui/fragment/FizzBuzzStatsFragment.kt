@@ -16,7 +16,7 @@ class FizzBuzzStatsFragment : Fragment() {
     private lateinit var binding: FragmentFizzbuzzStatsBinding
     private val viewModel: FizzBuzzStatsViewModel by viewModels()
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentFizzbuzzStatsBinding.inflate(inflater, container, false)
         enterTransition = materialSharedAxis(MaterialSharedAxis.Y, true)
         exitTransition = materialSharedAxis(MaterialSharedAxis.Y, false)

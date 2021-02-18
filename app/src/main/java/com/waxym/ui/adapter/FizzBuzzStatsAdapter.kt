@@ -37,9 +37,11 @@ class FizzBuzzStatsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         when {
             item is UIO.Graph && holder is GraphViewHolder -> {
                 holder.binding.graph.setPercents(item.data)
+                holder.binding.total.text = item.total
             }
             item is UIO.Char && holder is CharViewHolder -> {
                 holder.binding.color.setBackgroundColor(item.color)
+                holder.binding.hit.text = item.hit
                 holder.binding.fizzMultiple.text = item.fizzMultiple
                 holder.binding.fizzLabel.text = item.fizzLabel
                 holder.binding.buzzMultiple.text = item.buzzMultiple

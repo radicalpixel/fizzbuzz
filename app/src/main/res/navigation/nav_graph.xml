@@ -10,12 +10,6 @@
         app:destination="@id/fragment_fizz_buzz_stats" />
 
     <fragment
-        android:id="@+id/fragment_placeholder"
-        android:name="com.waxym.ui.fragment.PlaceHolderFragment"
-        android:label="@string/label_placeholder"
-        tools:layout="@layout/fragment_placeholder" />
-
-    <fragment
         android:id="@+id/fragment_fizz_buzz_form"
         android:name="com.waxym.ui.fragment.FizzBuzzFormFragment"
         android:label="@string/fragment_title_form"

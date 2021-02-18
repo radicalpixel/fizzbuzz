@@ -16,11 +16,11 @@ class FizzBuzzFormViewModel : ViewModel() {
     private val database: FizzBuzzDatabase by inject()
     private val formDao: FizzBuzzFormDao get() = database.formDao()
 
-    val fizzMultiple = MutableLiveData<String>("3")
-    val fizzLabel = MutableLiveData<String>("fizz")
-    val buzzMultiple = MutableLiveData<String>("5")
-    val buzzLabel = MutableLiveData<String>("buzz")
-    val limit = MutableLiveData<String>("100")
+    val fizzMultiple = MutableLiveData("3")
+    val fizzLabel = MutableLiveData("fizz")
+    val buzzMultiple = MutableLiveData("5")
+    val buzzLabel = MutableLiveData("buzz")
+    val limit = MutableLiveData("100")
 
     suspend fun doOnValidForm(binding: FragmentFizzbuzzFormBinding, lambda: (fizzBuzzForm: FizzBuzzForm) -> Unit) {
         val fizzMultiple: Int? = binding.inputLayoutFizzMultiple.requireNotBlank()?.requirePositiveInteger()?.asInt()
@@ -31,7 +31,7 @@ class FizzBuzzFormViewModel : ViewModel() {
 
         if (fizzMultiple != null && fizzLabel != null && buzzMultiple != null && buzzLabel != null && limit != null) {
             val form: FizzBuzzForm = getForm(fizzMultiple, fizzLabel, buzzMultiple, buzzLabel, limit).also { form ->
-                form.count += 1
+                form.hit += 1
                 formDao.insertOrUpdate(form)
             }
             lambda(form)

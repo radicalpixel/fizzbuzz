@@ -18,12 +18,24 @@
             android:layout_marginVertical="@dimen/margin_default"
             android:layout_marginStart="@dimen/margin_default"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/fizz_multiple"
+            app:layout_constraintEnd_toStartOf="@id/hit"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:background="@color/grey_800" />
+
+        <TextView
+            android:id="@+id/hit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_default"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/fizz_multiple"
+            app:layout_constraintStart_toEndOf="@id/color"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="@string/label_stats_chart_list_Hit" />
 
         <TextView
             android:id="@+id/fizz_multiple"
@@ -34,7 +46,7 @@
             android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/fizz_label"
-            app:layout_constraintStart_toEndOf="@id/color"
+            app:layout_constraintStart_toEndOf="@id/hit"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="3" />
 
@@ -82,14 +94,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginVertical="@dimen/margin_default"
-            android:layout_marginEnd="@dimen/margin_default"
             android:layout_marginStart="@dimen/margin_small"
+            android:layout_marginEnd="@dimen/margin_default"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/buzz_label"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="@string/label_stats_char_list_start" />
+            tools:text="@string/label_stats_chart_list_start" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </HorizontalScrollView>
