@@ -3,7 +3,8 @@ package com.waxym.ui.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.waxym.databinding.ItemStatsChartBinding
+import com.waxym.databinding.ItemStatsChartFormBinding
+import com.waxym.databinding.ItemStatsChartOtherBinding
 import com.waxym.databinding.ItemStatsGraphBinding
 import com.waxym.ui.viewmodel.FizzBuzzStatsViewModel.UIO
 
@@ -19,7 +20,8 @@ class FizzBuzzStatsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun getItemViewType(position: Int): Int = when (data.getOrNull(position)) {
         is UIO.Graph -> VIEW_TYPE_GRAPH
-        is UIO.Char -> VIEW_TYPE_CHART
+        is UIO.FormChar -> VIEW_TYPE_FORM_CHART
+        is UIO.OtherChart -> VIEW_TYPE_OTHER_CHART
         else -> super.getItemViewType(position)
     }
 
@@ -27,7 +29,8 @@ class FizzBuzzStatsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         val inflater = LayoutInflater.from(parent.context)
         return when (viewType) {
             VIEW_TYPE_GRAPH -> GraphViewHolder(ItemStatsGraphBinding.inflate(inflater, parent, false))
-            VIEW_TYPE_CHART -> CharViewHolder(ItemStatsChartBinding.inflate(inflater, parent, false))
+            VIEW_TYPE_FORM_CHART -> CharViewHolder(ItemStatsChartFormBinding.inflate(inflater, parent, false))
+            VIEW_TYPE_OTHER_CHART -> OtherViewHolder(ItemStatsChartOtherBinding.inflate(inflater, parent, false))
             else -> super.createViewHolder(parent, viewType)
         }
     }
@@ -39,7 +42,7 @@ class FizzBuzzStatsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                 holder.binding.graph.setPercents(item.data)
                 holder.binding.total.text = item.total
             }
-            item is UIO.Char && holder is CharViewHolder -> {
+            item is UIO.FormChar && holder is CharViewHolder -> {
                 holder.binding.color.setBackgroundColor(item.color)
                 holder.binding.hit.text = item.hit
                 holder.binding.fizzMultiple.text = item.fizzMultiple
@@ -48,15 +51,22 @@ class FizzBuzzStatsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                 holder.binding.buzzLabel.text = item.buzzLabel
                 holder.binding.limit.text = item.limit
             }
+            item is UIO.OtherChart && holder is OtherViewHolder -> {
+                holder.binding.color.setBackgroundColor(item.color)
+                holder.binding.hit.text = item.hit
+            }
         }
     }
 
     class GraphViewHolder(val binding: ItemStatsGraphBinding) : RecyclerView.ViewHolder(binding.root)
 
-    class CharViewHolder(val binding: ItemStatsChartBinding) : RecyclerView.ViewHolder(binding.root)
+    class CharViewHolder(val binding: ItemStatsChartFormBinding) : RecyclerView.ViewHolder(binding.root)
+
+    class OtherViewHolder(val binding: ItemStatsChartOtherBinding) : RecyclerView.ViewHolder(binding.root)
 
     companion object {
         const val VIEW_TYPE_GRAPH = 1
-        const val VIEW_TYPE_CHART = 2
+        const val VIEW_TYPE_FORM_CHART = 2
+        const val VIEW_TYPE_OTHER_CHART = 3
     }
 }

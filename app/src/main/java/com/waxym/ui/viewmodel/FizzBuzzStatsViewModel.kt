@@ -31,17 +31,25 @@ class FizzBuzzStatsViewModel(application: Application) : AndroidViewModel(applic
     init {
         viewModelScope.launch {
             val data: List<FizzBuzzForm> = formDao.getMostFrequent(MAX)
-            val total: Float = formDao.sumHitCount()?.toFloat() ?: 0f
+            val totalHits: Float = formDao.sumHitCount()?.toFloat() ?: 0f
 
+            var sumOfHits = 0f
             val percent = mutableListOf<CircularStatView.Percent>()
-            val charts = mutableListOf<UIO.Char>()
-            data.forEach {
+            val charts = mutableListOf<UIO>()
+            data.forEachIndexed { index, form ->
                 val color = context.getColor(COLORS[colorPointer])
-                percent.add(it.toPercent(color, total))
-                charts.add(it.toChartUio(color))
+                if (index == data.lastIndex && sumOfHits != totalHits) {
+                    val missingHits = totalHits - sumOfHits
+                    percent.add(buildOtherPercent(color, missingHits, totalHits))
+                    charts.add(buildOtherChart(color, missingHits.toInt()))
+                } else {
+                    sumOfHits += form.hit
+                    percent.add(form.toPercent(color, totalHits))
+                    charts.add(form.toChartUio(color))
+                }
             }
-            val graph = if (total > 0f) {
-                listOf(percent.toGraphUio(total))
+            val graph = if (totalHits > 0f) {
+                listOf(percent.toGraphUio(totalHits))
             } else {
                 listOf()
             }
@@ -50,22 +58,34 @@ class FizzBuzzStatsViewModel(application: Application) : AndroidViewModel(applic
         }
     }
 
-    private fun FizzBuzzForm.toPercent(@ColorInt color: Int, total: Float): CircularStatView.Percent =
-        CircularStatView.Percent(hit.toFloat() / total, color)
+    private fun FizzBuzzForm.toPercent(@ColorInt color: Int, total: Float) = CircularStatView.Percent(
+        hit.toFloat() / total,
+        color
+    )
+
+    private fun buildOtherPercent(@ColorInt color: Int, missingHit: Float, total: Float) = CircularStatView.Percent(
+        missingHit / total,
+        color
+    )
 
     private fun List<CircularStatView.Percent>.toGraphUio(total: Float): UIO.Graph = UIO.Graph(
         data = this,
         total = context.getString(R.string.label_stats_graph_total, total.toInt()),
     )
 
-    private fun FizzBuzzForm.toChartUio(@ColorInt color: Int): UIO.Char = UIO.Char(
+    private fun FizzBuzzForm.toChartUio(@ColorInt color: Int): UIO.FormChar = UIO.FormChar(
         color = color,
         fizzMultiple = "$fizzMultiple",
         fizzLabel = fizzLabel,
         buzzMultiple = "$buzzMultiple",
         buzzLabel = buzzLabel,
         limit = context.getString(R.string.label_stats_chart_list_start, limit),
-        hit = context.getString(R.string.label_stats_chart_list_Hit, hit),
+        hit = context.getString(R.string.label_stats_chart_list_hit, hit),
+    )
+
+    private fun buildOtherChart(@ColorInt color: Int, hit: Int) = UIO.OtherChart(
+        color = color,
+        hit = context.getString(R.string.label_stats_chart_list_other, hit),
     )
 
     sealed class UIO {
@@ -75,7 +95,7 @@ class FizzBuzzStatsViewModel(application: Application) : AndroidViewModel(applic
             val total: String,
         ) : UIO()
 
-        data class Char(
+        data class FormChar(
             @ColorInt
             val color: Int,
             val fizzMultiple: String,
@@ -83,6 +103,12 @@ class FizzBuzzStatsViewModel(application: Application) : AndroidViewModel(applic
             val buzzMultiple: String,
             val buzzLabel: String,
             val limit: String,
+            val hit: String,
+        ) : UIO()
+
+        data class OtherChart(
+            @ColorInt
+            val color: Int,
             val hit: String,
         ) : UIO()
     }

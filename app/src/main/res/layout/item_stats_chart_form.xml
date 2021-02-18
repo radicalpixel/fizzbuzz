@@ -35,7 +35,7 @@
             app:layout_constraintEnd_toStartOf="@id/fizz_multiple"
             app:layout_constraintStart_toEndOf="@id/color"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="@string/label_stats_chart_list_Hit" />
+            tools:text="@string/label_stats_chart_list_hit" />
 
         <TextView
             android:id="@+id/fizz_multiple"
