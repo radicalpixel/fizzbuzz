@@ -7,9 +7,11 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.google.android.material.transition.MaterialSharedAxis
+import com.waxym.R
 import com.waxym.databinding.FragmentFizzbuzzStatsBinding
 import com.waxym.ui.adapter.FizzBuzzStatsAdapter
 import com.waxym.ui.viewmodel.FizzBuzzStatsViewModel
+import com.waxym.utils.decorator.SpaceDecorator
 import com.waxym.utils.extension.materialSharedAxis
 
 class FizzBuzzStatsFragment : Fragment() {
@@ -26,6 +28,7 @@ class FizzBuzzStatsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.recyclerView.addItemDecoration(SpaceDecorator.Last(bottom = R.dimen.margin_default))
         binding.recyclerView.adapter = FizzBuzzStatsAdapter().also { adapter ->
             viewModel.stats.observe(viewLifecycleOwner) {
                 adapter.setData(it)
