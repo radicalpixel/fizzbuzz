@@ -16,4 +16,16 @@
 
     <color name="black">#000000</color>
     <color name="white">#FFFFFF</color>
+
+    <color name="chart_0">#EF7060</color>
+    <color name="chart_1">#EA8B8B</color>
+    <color name="chart_2">#A77DCC</color>
+    <color name="chart_3">#5270D5</color>
+    <color name="chart_4">#59C7F1</color>
+    <color name="chart_5">#2FB4A6</color>
+    <color name="chart_6">#7DAE72</color>
+    <color name="chart_7">#F5CF75</color>
+    <color name="chart_8">#FFA757</color>
+    <color name="chart_9">#A49F9B</color>
+
 </resources>

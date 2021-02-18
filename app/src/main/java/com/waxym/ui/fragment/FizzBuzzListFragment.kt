@@ -16,7 +16,7 @@ import com.waxym.utils.extension.materialSharedAxis
 class FizzBuzzListFragment : Fragment() {
     private lateinit var binding: FragmentFizzbuzzListBinding
     private val navArg: FizzBuzzListFragmentArgs by navArgs()
-    private val viewModel: FizzBuzzListViewModel by viewModels { FizzBuzzListViewModel.Factory(navArg.fizzBuzzFormId) }
+    private val viewModel: FizzBuzzListViewModel by viewModels { FizzBuzzListViewModel.Factory(navArg.fizzMultiple, navArg.fizzLabel, navArg.buzzMultiple, navArg.buzzLabel, navArg.limit) }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = FragmentFizzbuzzListBinding.inflate(inflater, container, false)

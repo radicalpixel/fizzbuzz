@@ -5,6 +5,10 @@
     android:id="@+id/nav_graph"
     app:startDestination="@id/fragment_fizz_buzz_form">
 
+    <action
+        android:id="@+id/navigate_to_stats"
+        app:destination="@id/fragment_fizz_buzz_stats" />
+
     <fragment
         android:id="@+id/fragment_placeholder"
         android:name="com.waxym.ui.fragment.PlaceHolderFragment"
@@ -27,8 +31,26 @@
         android:label="@string/fragment_title_list"
         tools:layout="@layout/fragment_fizzbuzz_list">
         <argument
-            android:name="fizzBuzzFormId"
-            app:argType="long" />
+            android:name="fizzMultiple"
+            app:argType="integer" />
+        <argument
+            android:name="fizzLabel"
+            app:argType="string" />
+        <argument
+            android:name="buzzMultiple"
+            app:argType="integer" />
+        <argument
+            android:name="buzzLabel"
+            app:argType="string" />
+        <argument
+            android:name="limit"
+            app:argType="integer" />
     </fragment>
+
+    <fragment
+        android:id="@+id/fragment_fizz_buzz_stats"
+        android:name="com.waxym.ui.fragment.FizzBuzzStatsFragment"
+        android:label="@string/fragment_title_stats"
+        tools:layout="@layout/fragment_fizzbuzz_stats" />
 
 </navigation>

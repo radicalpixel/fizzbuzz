@@ -1,15 +1,15 @@
 package com.waxym.ui.fragment
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.NavigationUI
 import com.google.android.material.transition.MaterialSharedAxis
+import com.waxym.R
 import com.waxym.databinding.FragmentFizzbuzzFormBinding
-import com.waxym.ui.viewmodel.FormViewModel
+import com.waxym.ui.viewmodel.FizzBuzzFormViewModel
 import com.waxym.utils.extension.materialSharedAxis
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -18,9 +18,10 @@ import kotlinx.coroutines.launch
 
 class FizzBuzzFormFragment : Fragment() {
     private lateinit var binding: FragmentFizzbuzzFormBinding
-    private val viewModel: FormViewModel by viewModels()
+    private val viewModel: FizzBuzzFormViewModel by viewModels()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        setHasOptionsMenu(true)
         binding = FragmentFizzbuzzFormBinding.inflate(inflater, container, false).also {
             it.viewModel = viewModel
             it.lifecycleOwner = viewLifecycleOwner
@@ -35,14 +36,23 @@ class FizzBuzzFormFragment : Fragment() {
         binding.actionCompute.setOnClickListener {
             CoroutineScope(Job() + Dispatchers.Main).launch {
                 viewModel.doOnValidForm(binding) {
-                    navigateToFizzBuzzList(it.uid)
+                    navigateToFizzBuzzList(it.fizzMultiple, it.fizzLabel, it.buzzMultiple, it.buzzLabel, it.limit)
                 }
             }
         }
     }
 
-    private fun navigateToFizzBuzzList(fizzBuzzFormId: Long) {
-        val direction = FizzBuzzFormFragmentDirections.navigateToList(fizzBuzzFormId)
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.menu_stats, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return NavigationUI.onNavDestinationSelected(item, findNavController()) || super.onOptionsItemSelected(item)
+    }
+
+    private fun navigateToFizzBuzzList(fizzMultiple: Int, fizzLabel: String, buzzMultiple: Int, buzzLabel: String, limit: Int) {
+        val direction = FizzBuzzFormFragmentDirections.navigateToList(fizzMultiple, fizzLabel, buzzMultiple, buzzLabel, limit)
         findNavController().navigate(direction)
     }
 }

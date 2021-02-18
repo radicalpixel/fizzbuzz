@@ -7,7 +7,7 @@ import com.waxym.utils.injection.inject
 import kotlinx.coroutines.launch
 
 
-class FizzBuzzListViewModel(formId: Long) : ViewModel() {
+class FizzBuzzListViewModel(fizzMultiple: Int, fizzLabel: String, buzzMultiple: Int, buzzLabel: String, limit: Int) : ViewModel() {
     private val database: FizzBuzzDatabase by inject()
 
     private val _data = MutableLiveData<List<String>>()
@@ -15,23 +15,31 @@ class FizzBuzzListViewModel(formId: Long) : ViewModel() {
 
     init {
         viewModelScope.launch {
-            val item = database.formDao().get(formId)
-            val uio: List<String> = buildFizzBuzzList(
-                start = 1,
-                end = item.limit,
-                fizzMultiple = item.fizzMultiple,
-                fizzLabel = item.fizzLabel,
-                buzzMultiple = item.buzzMultiple,
-                buzzLabel = item.buzzLabel
-            )
-            _data.postValue(uio)
+            val form = database.formDao().get(fizzMultiple, fizzLabel, buzzMultiple, buzzLabel, limit)
+            if (form != null) {
+                val uio: List<String> = buildFizzBuzzList(
+                    start = 1,
+                    end = form.limit,
+                    fizzMultiple = form.fizzMultiple,
+                    fizzLabel = form.fizzLabel,
+                    buzzMultiple = form.buzzMultiple,
+                    buzzLabel = form.buzzLabel
+                )
+                _data.postValue(uio)
+            }
         }
     }
 
     @Suppress("UNCHECKED_CAST")
-    class Factory(private val formId: Long) : ViewModelProvider.Factory {
+    class Factory(
+        private val fizzMultiple: Int,
+        private val fizzLabel: String,
+        private val buzzMultiple: Int,
+        private val buzzLabel: String,
+        private val limit: Int
+    ) : ViewModelProvider.Factory {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            return FizzBuzzListViewModel(formId) as T
+            return FizzBuzzListViewModel(fizzMultiple, fizzLabel, buzzMultiple, buzzLabel, limit) as T
         }
     }
 }
