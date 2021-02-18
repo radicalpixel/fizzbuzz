@@ -22,8 +22,8 @@ class FizzBuzzListFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         setHasOptionsMenu(true)
         binding = FragmentFizzbuzzListBinding.inflate(inflater, container, false)
-        enterTransition = materialSharedAxis(MaterialSharedAxis.Z, true)
-        exitTransition = materialSharedAxis(MaterialSharedAxis.Z, false)
+        enterTransition = materialSharedAxis()
+        exitTransition = materialSharedAxis()
         return binding.root
     }
 

@@ -6,7 +6,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.NavigationUI
-import com.google.android.material.transition.MaterialSharedAxis
 import com.waxym.R
 import com.waxym.databinding.FragmentFizzbuzzFormBinding
 import com.waxym.ui.viewmodel.FizzBuzzFormViewModel
@@ -26,8 +25,8 @@ class FizzBuzzFormFragment : Fragment() {
             it.viewModel = viewModel
             it.lifecycleOwner = viewLifecycleOwner
         }
-        enterTransition = materialSharedAxis(MaterialSharedAxis.Z, true)
-        exitTransition = materialSharedAxis(MaterialSharedAxis.Z, false)
+        enterTransition = materialSharedAxis()
+        exitTransition = materialSharedAxis()
         return binding.root
     }
 
@@ -48,11 +47,15 @@ class FizzBuzzFormFragment : Fragment() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        exitTransition = materialSharedAxis()
+        reenterTransition = materialSharedAxis()
         return NavigationUI.onNavDestinationSelected(item, findNavController()) || super.onOptionsItemSelected(item)
     }
 
     private fun navigateToFizzBuzzList(fizzMultiple: Int, fizzLabel: String, buzzMultiple: Int, buzzLabel: String, limit: Int) {
         val direction = FizzBuzzFormFragmentDirections.navigateToList(fizzMultiple, fizzLabel, buzzMultiple, buzzLabel, limit)
+        exitTransition = materialSharedAxis()
+        reenterTransition = materialSharedAxis()
         findNavController().navigate(direction)
     }
 }

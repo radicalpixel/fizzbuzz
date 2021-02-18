@@ -20,8 +20,8 @@ class FizzBuzzStatsFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentFizzbuzzStatsBinding.inflate(inflater, container, false)
-        enterTransition = materialSharedAxis(MaterialSharedAxis.Y, true)
-        exitTransition = materialSharedAxis(MaterialSharedAxis.Y, false)
+        enterTransition = materialSharedAxis()
+        exitTransition = materialSharedAxis()
         return binding.root
     }
 
