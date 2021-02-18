@@ -29,8 +29,8 @@ class FizzBuzzListViewModel(fizzMultiple: Int, fizzLabel: String, buzzMultiple: 
     class FizzBuzzDataSource(private val form: FizzBuzzForm) : PositionalDataSource<String>() {
         override fun loadInitial(params: LoadInitialParams, callback: LoadInitialCallback<String>) {
             val data = buildFizzBuzzList(
-                start = params.requestedStartPosition,
-                end = (params.requestedStartPosition + params.pageSize - 1).let { if (it < form.limit) it else form.limit },
+                start = params.requestedStartPosition + 1,
+                end = (params.requestedStartPosition + params.pageSize).let { if (it < form.limit) it else form.limit },
                 fizzMultiple = form.fizzMultiple,
                 fizzLabel = form.fizzLabel,
                 buzzMultiple = form.buzzMultiple,
