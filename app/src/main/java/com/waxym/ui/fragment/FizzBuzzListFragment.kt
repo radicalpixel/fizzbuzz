@@ -32,8 +32,7 @@ class FizzBuzzListFragment : Fragment() {
 
         binding.recyclerView.adapter = FizzBuzzItemAdapter().also { adapter ->
             viewModel.data.observe(viewLifecycleOwner) {
-                adapter.setData(it)
-                adapter.notifyDataSetChanged()
+                adapter.submitList(it)
             }
         }
     }
