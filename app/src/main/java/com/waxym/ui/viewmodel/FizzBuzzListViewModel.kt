@@ -2,6 +2,7 @@ package com.waxym.ui.viewmodel
 
 import androidx.lifecycle.*
 import com.waxym.data.database.FizzBuzzDatabase
+import com.waxym.utils.buildFizzBuzzList
 import com.waxym.utils.injection.inject
 import kotlinx.coroutines.launch
 
@@ -15,14 +16,14 @@ class FizzBuzzListViewModel(formId: Long) : ViewModel() {
     init {
         viewModelScope.launch {
             val item = database.formDao().get(formId)
-            val uio: List<String> = (1..item.limit).map {
-                when {
-                    it % item.fizzBuzzMultiple == 0 -> item.fizzBuzzLabel
-                    it % item.fizzMultiple == 0 -> item.fizzLabel
-                    it % item.buzzMultiple == 0 -> item.buzzLabel
-                    else -> "$it"
-                }
-            }
+            val uio: List<String> = buildFizzBuzzList(
+                start = 1,
+                end = item.limit,
+                fizzMultiple = item.fizzMultiple,
+                fizzLabel = item.fizzLabel,
+                buzzMultiple = item.buzzMultiple,
+                buzzLabel = item.buzzLabel
+            )
             _data.postValue(uio)
         }
     }
