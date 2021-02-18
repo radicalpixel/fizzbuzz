@@ -38,7 +38,7 @@ class FizzBuzzStatsViewModel(application: Application) : AndroidViewModel(applic
             val charts = mutableListOf<UIO>()
             data.forEachIndexed { index, form ->
                 val color = context.getColor(COLORS[colorPointer])
-                if (index == data.lastIndex && sumOfHits != totalHits) {
+                if (index == data.lastIndex && (sumOfHits + form.hit) != totalHits) {
                     val missingHits = totalHits - sumOfHits
                     percent.add(buildOtherPercent(color, missingHits, totalHits))
                     charts.add(buildOtherChart(color, missingHits.toInt()))
